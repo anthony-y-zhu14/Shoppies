@@ -59,20 +59,17 @@ export default function TabsWrappedLabel(action) {
   };
 
   return (
-    <div>
-      <Tabs className={classes.tabs} centered indicatorColor="secondary" textColor="secondary" variant="fullWidth">
-        <Tab label={'The Shoppies'}/>
-      </Tabs>
+    <div>     
 
       <Tabs className={classes.tabs} value={value} onChange={handleChange} centered indicatorColor="secondary" textColor="secondary" variant="fullWidth">      
         <Tab value="one" label='Search' {...a11yProps('one')} 
             onClick={()=>{              
-                
+                action.render.render.renderSearch()
             }}
         />
-        <Tab value="two" label='Education' {...a11yProps('two')} 
+        <Tab value="two" label='Nomination' {...a11yProps('two')} 
             onClick={()=>{              
-                
+              action.render.render.renderNomination()
             }}  
         />     
       </Tabs>

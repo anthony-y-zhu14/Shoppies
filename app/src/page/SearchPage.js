@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     content: {   
       margin: '20px auto',
       width: "40%",
+      padding: '40px',
       color: "black",  
       background: "rgba(250, 250, 250, 0.4)",
       backdropFilter: 'blur(8px)', 
@@ -82,7 +83,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     return(   
       <Fade in={true} timeout={1000}>          
         <main className={classes.root}>          
-            <TextField variant='outlined' type='input' placeholder='Please enter a movie title' label='Movie Title' InputProps={{ startAdornment: searchBtn()}}
+            <TextField variant='outlined' type='input' placeholder='Movie Title'  InputProps={{ startAdornment: searchBtn()}}
               onChange = {(e) => setSearchTerm(e.target.value)}>  
             </TextField> 
             <div className={classes.content}>

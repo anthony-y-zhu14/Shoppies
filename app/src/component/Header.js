@@ -12,18 +12,21 @@ const useStyles = makeStyles((theme) => ({
     background: 'primary',
     boxShadow: '0 4px 32px 0 rgba( 50, 50, 50)',
     borderRadius: '5px',
-    border: '0.5px solid rgba( 0, 0, 0)',    
+    border: '0.5px solid rgba( 0, 0, 0)',  
+    textAlign: "center", 
+    fontWeight: 'bold', 
   }
 }));
 
-export default function ClippedDrawer(action) {
+export default function ClippedDrawer(render) {
   const classes = useStyles();  
 
   return (
     <div className={classes.root}>   
       
       <AppBar variant='elevation' position="fixed" className={classes.appBar}>
-        <Tabs />
+        <p>The Shoppies</p>
+        <Tabs render={render}/>
       </AppBar>       
 
     </div>
