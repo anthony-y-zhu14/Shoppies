@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {   
       margin: '20px auto',
-      width: "40%",
+      width: "60%",
       padding: '40px',
       color: "black",  
       background: "rgba(250, 250, 250, 0.4)",
@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
   }));
 const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
 
-  export default function SearchPage() {
+  export default function SearchPage(action) {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
-    const [searchResult, setSearchResult] = React.useState();
+
     const searchBtn = () => {
       return(
         <InputAdornment>
@@ -49,12 +49,17 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
         </InputAdornment>
       )
     }    
+
     const handleSearch = () => {
       if (!searchTerm){
         alert('Please enter a movie title');
         return;
       }
-      fetchAPI().then(res => setSearchResult(res)).finally(console.log(searchResult))      
+      fetchAPI().then(res => action.updateSearchResult(res));   
+    }
+
+    const handleAdd = (movie) => {
+      action.addMovie(movie);
     }
 
     const fetchAPI = async () => {
@@ -65,17 +70,17 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     };
 
     const displaySearchResult = () => {     
-      if (searchResult && searchResult.Search) return (    
+      if (action.searchResult && action.searchResult.Search) return (    
         <Zoom in={true}>     
           <List>
-                {searchResult.Search.map(movie => (
+                {action.searchResult.Search.map(movie => (
                   <ListItem>
                   <ListItemAvatar>
                     <Avatar src={movie["Poster"]}/>
                   </ListItemAvatar>
                   <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />
                   <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="delete">
+                      <IconButton edge="end" aria-label="add" onClick={() => handleAdd(movie)}>
                         <AddIcon/>
                       </IconButton>
                   </ListItemSecondaryAction>

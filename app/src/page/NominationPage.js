@@ -1,6 +1,13 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Zoom from '@material-ui/core/Zoom';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import Avatar from '@material-ui/core/Avatar';
+import { List, ListItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function NominationPage() {
+export default function NominationPage(data) {
     const classes = useStyles();
 
     return (   
@@ -31,7 +38,23 @@ export default function NominationPage() {
         <main className={classes.root}>          
             <p>Nomination Page</p>
             <div className={classes.content}>
-            <p>Nomination Page</p>          
+            <Zoom in={true}>     
+              <List>
+                    {data.movieList && data.movieList.map(movie => (
+                      <ListItem>
+                      <ListItemAvatar>
+                        <Avatar src={movie["Poster"]}/>
+                      </ListItemAvatar>
+                      <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />    
+                      <ListItemSecondaryAction>
+                      <IconButton edge="end" aria-label="add" onClick={() => data.removeMovie(movie)}>
+                        <DeleteIcon />
+                      </IconButton>
+                      </ListItemSecondaryAction>             
+                    </ListItem>
+                    ))}  
+              </List>    
+            </Zoom>  
             </div>                     
         </main>  
       </Zoom>            
