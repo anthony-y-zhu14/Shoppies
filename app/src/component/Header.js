@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,    
-    background: 'primary',
+    background: 'rgba( 150, 150, 150, 0.5)',
+    backdropFilter: 'blur(8px)',
     boxShadow: '0 4px 32px 0 rgba( 50, 50, 50)',
     borderRadius: '5px',
     border: '0.5px solid rgba( 0, 0, 0)',  

@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Fade from '@material-ui/core/Fade';
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,13 +27,13 @@ export default function NominationPage() {
     const classes = useStyles();
 
     return (   
-      <Fade in={true} timeout={1000}>          
+      <Zoom in={true} style={{ transitionDelay: '400ms' }}>         
         <main className={classes.root}>          
             <p>Nomination Page</p>
             <div className={classes.content}>
             <p>Nomination Page</p>          
             </div>                     
         </main>  
-      </Fade>            
+      </Zoom>            
     );
 }
