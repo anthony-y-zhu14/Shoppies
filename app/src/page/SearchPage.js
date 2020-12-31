@@ -39,6 +39,8 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
   export default function SearchPage(action) {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
+    const [movieAdded, setMovieAdded] = React.useState(0);
+    
 
     const searchBtn = () => {
       return(
@@ -59,7 +61,8 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     }
 
     const handleAdd = (movie) => {
-      action.addMovie(movie);
+      action.addMovie(movie);      
+      setMovieAdded(movieAdded+1);
     }
 
     const fetchAPI = async () => {
@@ -80,8 +83,8 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
                   </ListItemAvatar>
                   <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />
                   <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="add" onClick={() => handleAdd(movie)}>
-                        <AddIcon/>
+                      <IconButton edge="end" aria-label="add" disabled={action.containsMovie(movie)} onClick={() => { handleAdd(movie) }}>
+                        <AddIcon/>                        
                       </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>

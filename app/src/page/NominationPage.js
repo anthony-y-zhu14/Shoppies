@@ -7,7 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Avatar from '@material-ui/core/Avatar';
-import { List, ListItem } from '@material-ui/core';
+import { Button, List, ListItem, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {   
       margin: '20px auto',
-      width: "40%",
+      width: "60%",
       padding: '40px',
       color: "black",  
       background: "rgba(250, 250, 250, 0.4)",
@@ -33,29 +33,35 @@ const useStyles = makeStyles((theme) => ({
 export default function NominationPage(data) {
     const classes = useStyles();
 
+    const movieList = (
+      <Zoom in={true}>     
+        <List>
+              {data.movieList && data.movieList.map(movie => (
+                <ListItem>
+                <ListItemAvatar>
+                  <Avatar src={movie["Poster"]}/>
+                </ListItemAvatar>
+                <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />    
+                <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="add" onClick={() => data.removeMovie(movie)}>
+                  <DeleteIcon />
+                </IconButton>
+                </ListItemSecondaryAction>             
+              </ListItem>
+              ))}  
+        </List>    
+      </Zoom>
+    );
+
     return (   
       <Zoom in={true} style={{ transitionDelay: '400ms' }}>         
         <main className={classes.root}>          
-            <p>Nomination Page</p>
-            <div className={classes.content}>
-            <Zoom in={true}>     
-              <List>
-                    {data.movieList && data.movieList.map(movie => (
-                      <ListItem>
-                      <ListItemAvatar>
-                        <Avatar src={movie["Poster"]}/>
-                      </ListItemAvatar>
-                      <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />    
-                      <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="add" onClick={() => data.removeMovie(movie)}>
-                        <DeleteIcon />
-                      </IconButton>
-                      </ListItemSecondaryAction>             
-                    </ListItem>
-                    ))}  
-              </List>    
-            </Zoom>  
-            </div>                     
+            <Typography variant='h3'>Here are the movies you have nominated</Typography>
+            <div className={classes.content}>              
+              {movieList}
+            </div>
+
+            <Button variant='outlined' onClick={()=>data.save()}>Save</Button>                     
         </main>  
       </Zoom>            
     );
