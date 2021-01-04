@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
-import AddIcon from '@material-ui/icons/Add';
+import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import { blue } from '@material-ui/core/colors';
 
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       margin: "8px auto",
       color: 'black'   
     },
-    orange: {
+    avatar: {
       color: theme.palette.getContrastText(blue['A100']),
       backgroundColor: blue['A100'],
     },
@@ -47,7 +47,6 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
   export default function SearchPage(action) {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
-    const [counter, setCounter] = React.useState(0);   
 
     const searchBtn = () => {
       return(
@@ -69,7 +68,6 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
 
     const handleAdd = (movie) => {
       action.addMovie(movie);      
-      setCounter(counter+1);
     }
 
     const fetchAPI = async () => {
@@ -79,22 +77,22 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
       return body;
     };
 
-    const displaySearchResult = () => {     
+    const displaySearchResult = () => {  
+      if (action.searchResult && !action.searchResult.Search) return (<Typography variant='h5' color='secondary'>No Resut Found'</Typography>)   
       if (action.searchResult && action.searchResult.Search) return (            
-        <Zoom in={true}>    
-          
+        <Zoom in={true}>   
           <List>
-            {searchTerm && <Typography variant='h5' color='secondary'>Result for ' {searchTerm} '</Typography>}
+            {searchTerm && <Typography variant='h5' color='secondary'>Here's what we could find</Typography>}
             {!searchTerm && <Typography variant='h5' color='secondary'>Previous Search Result</Typography>}
             {action.searchResult.Search.map(movie => (
               <ListItem>
               <ListItemAvatar>
-                <Avatar alt={movie["Title"]} src={movie["Poster"]} className={classes.orange}/>
+                <Avatar alt={movie["Title"]} src={movie["Poster"]} className={classes.avatar}/>
               </ListItemAvatar>
               <ListItemText primary={movie["Title"]} secondary={movie["Year"]}/>
               <ListItemSecondaryAction>
                   <IconButton edge="end" aria-label="add" disabled={action.containsMovie(movie)} onClick={() => { handleAdd(movie) }}>
-                    <AddIcon/>                        
+                    <MovieFilterIcon />                        
                   </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -108,7 +106,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
       <Zoom in={true} style={{ transitionDelay: '400ms' }}>      
         <main className={classes.root}>          
             <div className={classes.content}>
-              <TextField fullWidth={true} className={classes.input} variant='outlined' type='input' placeholder='Movie Title' helperText='Please enter a movie title' InputProps={{ startAdornment: searchBtn()}}
+              <TextField fullWidth={true} className={classes.input} variant='outlined' type='input' placeholder='Please enter a movie title' InputProps={{ startAdornment: searchBtn()}}
                 onChange = {(e) => setSearchTerm(e.target.value)}>  
               </TextField> 
               {displaySearchResult()}                        

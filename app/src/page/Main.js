@@ -8,7 +8,7 @@ import {  Snackbar } from '@material-ui/core';
 
 export default function Main(){       
     const [searchPage, setSearchPage] = React.useState(true);   
-    const [movieList, setMovieList] = React.useState(localStorage.getItem('movieList') ? JSON.parse(localStorage.getItem('movieList')) : []); 
+    const [movieList, setMovieList] = React.useState(localStorage.getItem('movieList') ? JSON.parse(localStorage.getItem('movieList')) : {}); 
     const [searchResult, setSearchResult] = React.useState();    
     const [open, setOpen] = React.useState(false);
     const [alert, setAlert] = React.useState();
@@ -35,34 +35,34 @@ export default function Main(){
 	    a.href = url;
 	    a.download = filename;
 	    a.click();
-
     }
 
     const addMovie = (newMovie) => {        
-        if (containsMovie(newMovie)) {
+        if (movieList[newMovie.imdbID]) {
             setAlert('warning');
             setMessage(`${newMovie.Title} has already been nominated`);
             setOpen(true);
             return;
         }
+        saveMovieList();
         setAlert('success');
         setMessage('Sucessfully Nominated');
         setOpen(true);
-        movieList.push(newMovie);
-        setMovieList(movieList);        
+        movieList[newMovie.imdbID] = newMovie;        
+        setMovieList(movieList);     
     }
 
     const removeMovie = (data) => {
-        setMovieList(movieList.filter(movie => movie.imdbID !== data.imdbID));
+        delete movieList[data.imdbID];
+        saveMovieList();
+        setMovieList(movieList);
         setAlert('success');
         setMessage(`${data.Title} has been removed from Nomination`);
         setOpen(true);
     }
 
-    const containsMovie = (newMovie) => {
-        let contained = false;        
-        movieList.forEach(movie => {if (movie.imdbID === newMovie.imdbID) contained = true});
-        return contained;
+    const containsMovie = (movie) => {        
+        return movieList[movie.imdbID] ? true : false;
     }
 
     const updateSearchResult = (data) => {
@@ -84,7 +84,7 @@ export default function Main(){
     
     const page = searchPage ? 
         <SearchPage addMovie={addMovie} movieList={movieList} updateSearchResult={updateSearchResult} searchResult={searchResult} containsMovie={containsMovie} /> : 
-        <NominationPage movieList={movieList} removeMovie={removeMovie} save={saveMovieList} download={downloadMovieList}/>;
+        <NominationPage movieList={movieList} removeMovie={removeMovie} download={downloadMovieList}/>;
 
     return (
         <React.Fragment>    

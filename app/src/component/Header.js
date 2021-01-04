@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     border: '0.5px solid rgba( 0, 0, 0)',  
     textAlign: "center",  
-    margin: '10px auto',
     padding: '8px',
   }
 }));

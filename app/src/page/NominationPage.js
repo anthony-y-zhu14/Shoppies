@@ -5,10 +5,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from '@material-ui/icons/Delete';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 import Avatar from '@material-ui/core/Avatar';
 import { Button, List, ListItem, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert'
+import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +30,12 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid rgb(255, 255, 255, 0.2)"
     },
     button: {
-      margin: '20px'
+      margin: '20px',
+      color: '#ffffff'
+    },
+    avatar: {
+      color: theme.palette.getContrastText(blue['A100']),
+      backgroundColor: blue['A100'],
     },
   }));
 
@@ -37,18 +43,26 @@ const useStyles = makeStyles((theme) => ({
 export default function NominationPage(data) {
     const classes = useStyles();
 
+    const bannerCounter = 5;
+
     const movieList = (
-      <Zoom in={true}>     
+      <Zoom in={true}> 
+          
         <List>
-              {data.movieList && data.movieList.map(movie => (
+            {Object.keys(data.movieList).length === 0 && 
+              <React.Fragment marginTop='100px'>
+                  <Alert color='primary' variant='filled' severity={'info'}>A bit empty here. You have not nominated any movies yet.</Alert>
+              </React.Fragment>
+            }
+              {data.movieList && Object.keys(data.movieList).map(imdbID => (
                 <ListItem>
                 <ListItemAvatar>
-                  <Avatar src={movie["Poster"]}/>
+                  <Avatar alt={data.movieList[imdbID]["Title"]} src={data.movieList[imdbID]["Poster"]} className={classes.avatar} />
                 </ListItemAvatar>
-                <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />    
+                <ListItemText primary={data.movieList[imdbID]["Title"]} secondary={data.movieList[imdbID]["Year"]} />    
                 <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="add" onClick={() => data.removeMovie(movie)}>
-                  <DeleteIcon />
+                <IconButton edge="end" aria-label="add" onClick={() => data.removeMovie(data.movieList[imdbID])}>
+                  <BackspaceIcon />
                 </IconButton>
                 </ListItemSecondaryAction>             
               </ListItem>
@@ -61,18 +75,17 @@ export default function NominationPage(data) {
       <Zoom in={true} style={{ transitionDelay: '400ms' }}>         
         <main className={classes.root}>       
             <div className={classes.content}>                            
-              <Typography variant='h5'>Nominations</Typography> 
+              <Typography variant='h5'>Your Nominations</Typography> 
               <br/>
-              {data.movieList.length >= 5 && 
+              {Object.keys(data.movieList).length >= bannerCounter && 
               <React.Fragment marginTop='100px'>
-                  <Alert color='primary' variant='filled' severity={'success'}>You have nominated more than five movies!</Alert>
+                  <Alert variant='filled' severity={'success'}>You have nominated more than five movies!</Alert>
               </React.Fragment>
               }  
               {movieList}
             </div>
             <div>  
-              <Button className={classes.button} variant='contained' size='large' color='primary' onClick={()=>data.save()}>Save</Button>       
-              <Button className={classes.button} variant='contained' size='large' onClick={()=>data.download()}>Download</Button>  
+              <Button className={classes.button} disabled={Object.keys(data.movieList).length===0} variant='contained' size='large' color='primary' onClick={()=>data.download()}>Save as JSON</Button>      
             </div>                
         </main>  
       </Zoom>            
