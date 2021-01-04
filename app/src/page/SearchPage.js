@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Zoom from '@material-ui/core/Zoom';
-import { List, ListItem, TextField } from '@material-ui/core';
+import { List, ListItem, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -10,6 +10,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
 import AddIcon from '@material-ui/icons/Add';
+import { blue } from '@material-ui/core/colors';
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,14 +27,19 @@ const useStyles = makeStyles((theme) => ({
       width: "60%",
       padding: '40px',
       color: "black",  
-      background: "rgba(250, 250, 250, 0.4)",
+      background: "rgba(200, 200, 200, 0.4)",
       backdropFilter: 'blur(8px)', 
       textAlign: 'center',
       borderRadius: '30px',
       border: "1px solid rgb(255, 255, 255, 0.2)"
     },
     input: {
-      margin: "2% auto"   
+      margin: "8px auto",
+      color: 'black'   
+    },
+    orange: {
+      color: theme.palette.getContrastText(blue['A100']),
+      backgroundColor: blue['A100'],
     },
   }));
 const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
@@ -39,8 +47,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
   export default function SearchPage(action) {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
-    const [movieAdded, setMovieAdded] = React.useState(0);
-    
+    const [counter, setCounter] = React.useState(0);   
 
     const searchBtn = () => {
       return(
@@ -62,7 +69,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
 
     const handleAdd = (movie) => {
       action.addMovie(movie);      
-      setMovieAdded(movieAdded+1);
+      setCounter(counter+1);
     }
 
     const fetchAPI = async () => {
@@ -73,22 +80,26 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     };
 
     const displaySearchResult = () => {     
-      if (action.searchResult && action.searchResult.Search) return (    
-        <Zoom in={true}>     
+      if (action.searchResult && action.searchResult.Search) return (            
+        <Zoom in={true}>    
+          
           <List>
-                {action.searchResult.Search.map(movie => (
-                  <ListItem>
-                  <ListItemAvatar>
-                    <Avatar src={movie["Poster"]}/>
-                  </ListItemAvatar>
-                  <ListItemText primary={movie["Title"]} secondary={movie["Year"]} />
-                  <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="add" disabled={action.containsMovie(movie)} onClick={() => { handleAdd(movie) }}>
-                        <AddIcon/>                        
-                      </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-                ))}  
+            {searchTerm && <Typography variant='h5' color='secondary'>Result for ' {searchTerm} '</Typography>}
+            {!searchTerm && <Typography variant='h5' color='secondary'>Previous Search Result</Typography>}
+            {action.searchResult.Search.map(movie => (
+              <ListItem>
+              <ListItemAvatar>
+                <Avatar alt={movie["Title"]} src={movie["Poster"]} className={classes.orange}/>
+              </ListItemAvatar>
+              <ListItemText primary={movie["Title"]} secondary={movie["Year"]}/>
+              <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="add" disabled={action.containsMovie(movie)} onClick={() => { handleAdd(movie) }}>
+                    <AddIcon/>                        
+                  </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+            ))} 
+            
           </List>    
         </Zoom>    
       )};
@@ -100,8 +111,9 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
               <TextField fullWidth={true} className={classes.input} variant='outlined' type='input' placeholder='Movie Title' helperText='Please enter a movie title' InputProps={{ startAdornment: searchBtn()}}
                 onChange = {(e) => setSearchTerm(e.target.value)}>  
               </TextField> 
-              {displaySearchResult()}                 
-            </div>                     
+              {displaySearchResult()}                        
+            </div>      
+                           
         </main>  
       </Zoom>            
     );

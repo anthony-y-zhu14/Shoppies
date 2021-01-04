@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import { Provider } from 'react-redux';
-import store from './redux/store'
 
 const theme = createMuiTheme({
   palette:
@@ -51,10 +49,8 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>      
+    <React.StrictMode>      
+        <App />           
     </React.StrictMode>
   </ThemeProvider>,
   document.getElementById('root')
