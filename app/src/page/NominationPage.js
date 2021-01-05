@@ -43,8 +43,6 @@ const useStyles = makeStyles((theme) => ({
 export default function NominationPage(data) {
     const classes = useStyles();
 
-    const bannerCounter = 5;
-
     const movieList = (
       <Zoom in={true}> 
           
@@ -79,9 +77,9 @@ export default function NominationPage(data) {
             <div className={classes.content}>                            
               <Typography variant='h5'>Your Nominations</Typography> 
               <br/>
-              {Object.keys(data.movieList).length >= bannerCounter && 
+              {Object.keys(data.movieList).length === data.maxNominations && 
               <React.Fragment marginTop='100px'>
-                  <Alert variant='filled' severity={'success'}>You have nominated more than five movies!</Alert>
+                  <Alert variant='filled' severity={'success'}>{`You have nominated ${data.maxNominations} movies!`}</Alert>
               </React.Fragment>
               }  
               {movieList}

@@ -92,7 +92,7 @@ export default function Main(){
     
     const page = searchPage ? 
         <SearchPage addMovie={addMovie} movieList={movieList} updateSearchResult={updateSearchResult} searchResult={searchResult} containsMovie={containsMovie} /> : 
-        <NominationPage movieList={movieList} removeMovie={removeMovie} download={downloadMovieList}/>;
+        <NominationPage movieList={movieList} removeMovie={removeMovie} download={downloadMovieList} maxNominations={maxNominations}/>;
 
     return (
         <React.Fragment>    
