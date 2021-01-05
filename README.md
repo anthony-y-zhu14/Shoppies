@@ -2,6 +2,9 @@
 
 The Shoppies is a web app that provides help to search movies via OMDB database and add to personal nomination list which can be export as a JSON file.
 
+![alt text](http://url/to/img.png)
+![alt text](http://url/to/img.png)
+
 ## Installation
 
 To ensure a proper installation please verify that your system has Node.js, npm, react-app, and Express installed correctly. For more instructions on this please refer to: https://nodejs.org/en/ and https://reactjs.org/.
