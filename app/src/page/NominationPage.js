@@ -51,7 +51,9 @@ export default function NominationPage(data) {
         <List>
             {Object.keys(data.movieList).length === 0 && 
               <React.Fragment marginTop='100px'>
-                  <Alert color='primary' variant='filled' severity={'info'}>A bit empty here. You have not nominated any movies yet.</Alert>
+                  <Alert color='primary' variant='filled' severity='info'>
+                    A bit empty here. You have not nominated any movies yet.
+                  </Alert>
               </React.Fragment>
             }
               {data.movieList && Object.keys(data.movieList).map(imdbID => (
@@ -85,7 +87,7 @@ export default function NominationPage(data) {
               {movieList}
             </div>
             <div>  
-              <Button className={classes.button} disabled={Object.keys(data.movieList).length===0} variant='contained' size='large' color='primary' onClick={()=>data.download()}>Save as JSON</Button>      
+              <Button className={classes.button} disabled={Object.keys(data.movieList).length===0} variant='contained' size='large' color='primary' onClick={()=>data.download()}>Save List as JSON</Button>      
             </div>                
         </main>  
       </Zoom>            

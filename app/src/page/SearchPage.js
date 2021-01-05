@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: blue['A100'],
     },
   }));
+  
 const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
 
   export default function SearchPage(action) {
@@ -78,11 +79,10 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     };
 
     const displaySearchResult = () => {  
-      if (action.searchResult && !action.searchResult.Search) return (<Typography variant='h5' color='secondary'>No Resut Found'</Typography>)   
+      if (action.searchResult && !action.searchResult.Search) return (<Typography variant='h5' color='secondary'>No Resut Found</Typography>)   
       if (action.searchResult && action.searchResult.Search) return (            
         <Zoom in={true}>   
-          <List>
-            {searchTerm && <Typography variant='h5' color='secondary'>Here's what we could find</Typography>}
+          <List>            
             {!searchTerm && <Typography variant='h5' color='secondary'>Previous Search Result</Typography>}
             {action.searchResult.Search.map(movie => (
               <ListItem>

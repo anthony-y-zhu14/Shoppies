@@ -14,6 +14,8 @@ export default function Main(){
     const [alert, setAlert] = React.useState();
     const [message, setMessage] = React.useState();
 
+    const maxNominations = 5;
+
     const render = {
         renderSearch : () => {if (!searchPage) setSearchPage(true)},
         renderNomination: () => {if (searchPage) setSearchPage(false)}
@@ -41,6 +43,12 @@ export default function Main(){
         if (movieList[newMovie.imdbID]) {
             setAlert('warning');
             setMessage(`${newMovie.Title} has already been nominated`);
+            setOpen(true);
+            return;
+        }
+        if (Object.keys(movieList).length === maxNominations) {
+            setAlert('warning');
+            setMessage(`You has already nominated ${maxNominations} movies`);
             setOpen(true);
             return;
         }
