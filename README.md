@@ -19,8 +19,8 @@ cd /The-Shoppies/
 npm install
 ```
 
-Once you have completed the above steps you will have to run
-(we recommend having two terminal instances open):
+Once you have completed the above steps you will have to run:
+
 ```bash
 cd /The-Shoppies/app
 npm start
