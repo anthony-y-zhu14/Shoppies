@@ -48,6 +48,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
   export default function SearchPage(action) {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
+    const [input, setInput] = React.useState();
 
     const searchBtn = () => {
       return(
@@ -60,11 +61,12 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     }    
 
     const handleSearch = () => {
-      if (!searchTerm){
+      if (!input){
         alert('Please enter a movie title');
         return;
       }
-      fetchAPI().then(res => action.updateSearchResult(res));   
+      fetchAPI().then(res => action.updateSearchResult(res));
+      setSearchTerm(input);   
     }
 
     const handleAdd = (movie) => {
@@ -72,18 +74,19 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     }
 
     const fetchAPI = async () => {
-      let url = OMDB_API + `&s=${searchTerm}`;
+      let url = OMDB_API + `&s=${input}`;
       const response = await fetch(url);
       const body = await response.json();
       return body;
     };
 
     const displaySearchResult = () => {  
-      if (action.searchResult && !action.searchResult.Search) return (<Typography variant='h5' color='secondary'>No Resut Found</Typography>)   
+      if (action.searchResult && !action.searchResult.Search) return (<Typography variant='h5' color='secondary'>{`No Resut Found for ' ${searchTerm} '`}</Typography>)   
       if (action.searchResult && action.searchResult.Search) return (            
         <Zoom in={true}>   
           <List>            
             {!searchTerm && <Typography variant='h5' color='secondary'>Previous Search Result</Typography>}
+            {searchTerm && <Typography variant='h5' color='secondary'>{`Search Result for ' ${searchTerm} '`}</Typography>}
             {action.searchResult.Search.map(movie => (
               <ListItem>
               <ListItemAvatar>
@@ -107,7 +110,7 @@ const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
         <main className={classes.root}>          
             <div className={classes.content}>
               <TextField fullWidth={true} className={classes.input} variant='outlined' type='input' placeholder='Please enter a movie title' InputProps={{ startAdornment: searchBtn()}}
-                onChange = {(e) => setSearchTerm(e.target.value)}>  
+                onChange = {(e) => setInput(e.target.value)}>  
               </TextField> 
               {displaySearchResult()}                        
             </div>      
