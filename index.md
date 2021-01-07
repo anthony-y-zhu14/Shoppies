@@ -1,37 +1,85 @@
-## Welcome to GitHub Pages
+# The Shoppies
 
-You can use the [editor on GitHub](https://github.com/anthony-y-zhu14/The-Shoppies/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The Shoppies is a web app that provides help to search movies via OMDB database and add to personal nomination list which can be export as a JSON file.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![alt text](./screenshot1.png)
+![alt text](./screenshot2.png)
 
-### Markdown
+## Installation
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+To ensure a proper installation please verify that your system has Node.js, npm, react-app, and Express installed correctly. For more instructions on this please refer to: https://nodejs.org/en/ and https://reactjs.org/.
 
-```markdown
-Syntax highlighted code block
+<h3>Locally:</h3>
+If running locally you will also need to do the following:
 
-# Header 1
-## Header 2
-### Header 3
+git clone https://github.com/anthony-y-zhu14/The-Shoppies
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+cd /The-Shoppies/
+npm install
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Once you have completed the above steps you will have to run:
 
-### Jekyll Themes
+```bash
+cd /The-Shoppies/app
+npm start
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/anthony-y-zhu14/The-Shoppies/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+navigate to http://127.0.0.1:3000/
 
-### Support or Contact
+Happy movie hunting :-)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Files
+
+```bash
+.
+├── README.md
+└── app
+    ├── README.md
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    │   ├── android-chrome-192x192.png
+    │   ├── android-chrome-512x512.png
+    │   ├── apple-touch-icon.png
+    │   ├── favicon-16x16.png
+    │   ├── favicon-32x32.png
+    │   ├── favicon.ico
+    │   ├── index.html
+    │   └── manifest.json
+    └── src
+        ├── App.js
+        ├── component
+        │   ├── Header.js
+        │   └── Tabs.js
+        ├── img
+        │   └── background.jpg
+        ├── index.css
+        ├── index.js
+        └── page
+            ├── Main.js
+            ├── NominationPage.js
+            └── SearchPage.js
+```
+
+## Usage
+
+Use for searching and nominating movies only.
+
+
+## Libraries & Frameworks Used
+- Material UI (https://material-ui.com/)
+- ReactJs
+
+## Contributing
+Contributor:
+
+```bash
+Anthony Y. Zhu
+```
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
