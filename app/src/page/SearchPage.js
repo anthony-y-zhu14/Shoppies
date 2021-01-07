@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const OMDB_API = "http://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
+const OMDB_API = "https://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
 
   export default function SearchPage(action) {
     const classes = useStyles();
