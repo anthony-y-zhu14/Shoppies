@@ -5,7 +5,6 @@ import { List, ListItem, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -35,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid rgb(255, 255, 255, 0.2)"
     },
     input: {
-      margin: "8px auto",
-      color: 'black'   
+      color: 'black',
+      margin: '8px auto',
+      width: '50%',   
     },
     avatar: {
       color: theme.palette.getContrastText(blue['A100']),
@@ -50,26 +50,6 @@ const OMDB_API = "https://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = React.useState();
     const [input, setInput] = React.useState();
-
-    const searchBtn = () => {
-      return(
-        <InputAdornment>
-          <IconButton onClick={handleSearch}>
-            <SearchIcon color='secondary'/>
-          </IconButton>
-        </InputAdornment>
-      )
-    }   
-    
-    const clearBtn = () => {
-      return(
-        <InputAdornment>
-          <IconButton onClick={clearInput}>
-            <HighlightOffIcon color='secondary'/>
-          </IconButton>
-        </InputAdornment>
-      )
-    } 
 
     const clearInput = () => setInput('');
 
@@ -103,7 +83,7 @@ const OMDB_API = "https://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
             {action.searchResult.Search.map(movie => (
               <ListItem>
               <ListItemAvatar>
-                <Avatar alt={movie["Title"]} src={movie["Poster"]} className={classes.avatar}/>
+                <Avatar sizes='lg' alt={movie["Title"]} src={movie["Poster"]} className={classes.avatar}/>
               </ListItemAvatar>
               <ListItemText primary={movie["Title"]} secondary={movie["Year"]}/>
               <ListItemSecondaryAction>
@@ -112,8 +92,7 @@ const OMDB_API = "https://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
                   </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
-            ))} 
-            
+            ))}             
           </List>    
         </Zoom>    
       )};
@@ -122,9 +101,19 @@ const OMDB_API = "https://www.omdbapi.com/?i=tt3896198&apikey=c480e84f";
       <Zoom in={true} style={{ transitionDelay: '400ms' }}>      
         <main className={classes.root}>          
             <div className={classes.content}>
-              <TextField fullWidth={true} className={classes.input} variant='outlined' type='input' placeholder='Please enter a movie title' InputProps={{ startAdornment: searchBtn(), endAdornment: clearBtn() }}
+
+              <IconButton color='primary' onClick={handleSearch}>
+                <SearchIcon color='primary'/>
+              </IconButton>
+
+              <TextField  className={classes.input} placeholder='Please enter a movie title' type='input' inputProps={{ style: {textAlign: 'center'} }}
                 value={input} onChange = {(e) => setInput(e.target.value)} onKeyPress={(e) => {if (e.key === 'Enter') handleSearch()}} >  
               </TextField> 
+
+              <IconButton color='secondary' onClick={clearInput}>
+                <HighlightOffIcon color='secondary'/>
+              </IconButton>
+
               {displaySearchResult()}                        
             </div>      
                            
